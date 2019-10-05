@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Torrent Seacrh</title>
+</head>
+<body>
+
+  <div class="header">
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" id="search" name='search' placeholder="Enter here">
+      <input type="submit" value="Search">
+    </form>
+  </div>
+  <div class="main">
+
+    {% for title, value in data.items %}
+      <div class="torrent">
+        {% for key, info in value.items %}
+          {% if key == 'link' %}
+            <div class="link">
+              <a href="{{info}}">{{title}}</a>
+            </div>
+          {% elif key == 'magnet_link' %}
+            <div class="magnet-link">
+              <a href="{{info}}">Magnet</a>
+            </div>
+          {% elif key == 'size' %}
+            <div class="size">
+              <p>{{info}}</p>
+            </div>
+          {% elif key == 'sid' %}
+            <div class="sid">
+              <p><i class="material-icons">arrow_upward</i>{{info}}</p>
+            </div>
+          {% elif key == 'pir' %}
+            <div class="pir">
+              <p><i class="material-icons">arrow_downward</i>{{info}}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+    {% endfor %}
+  </div>
+  <div class="footer">
+    
+  </div>
+</body>
+</html>
